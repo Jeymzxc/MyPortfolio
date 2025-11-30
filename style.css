@@ -275,3 +275,54 @@ body.dark-mode .project-footer {
   justify-content: center;
 }
 
+
+/* Contact Section */
+
+.social-links a.contact-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 1.25rem;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.social-links a.contact-icon:hover {
+  transform: scale(1.1);
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Footer Section */
+
+footer .social-link i {
+  color: #fff;  /* always white */
+  font-size: 1.25rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+footer .social-link:hover {
+  transform: scale(1.1);
+  color: var(--primary-color); /* optional hover color */
+}
+
+/* Scroll Section */
+
+.navbar {
+  transition: top 0.3s ease-in-out;
+  position: fixed; 
+  width: 100%;
+  z-index: 999;
+}
+
+.navbar-hidden {
+  top: -100px;
+}
+
+.navbar-shown {
+  top: 0;
+}
