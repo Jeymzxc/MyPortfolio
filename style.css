@@ -215,3 +215,63 @@ body.dark-mode .project-footer {
   color: #fff;
 }
 
+/* Certifications Section */
+
+#certifications .row {
+  display: flex;
+  flex-wrap: wrap; 
+  margin-left: -0.75rem; 
+  margin-right: -0.75rem;
+  justify-content: flex-start; 
+}
+
+#certifications .row > .col-md-4 {
+  display: flex;
+  flex: 0 0 33.333%; 
+  padding-left: 0.75rem; 
+  padding-right: 0.75rem;
+  margin-bottom: 1.5rem; 
+}
+
+.cert-card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--card-bg); 
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.cert-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;       
+}
+
+.cert-link:hover .cert-card {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.cert-content {
+  background-color: var(--content-bg);  
+  padding: 1.25rem;
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
+}
+
+.cert-card img.card-img-top {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  background-color: var(--card-bg); 
+}
+
+#certifications .row:last-child {
+  justify-content: center;
+}
+
