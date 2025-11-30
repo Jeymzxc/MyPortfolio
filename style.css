@@ -1,4 +1,10 @@
 :root {
+  --bg-color: #EAEDF0;
+  --text-color: #212529;
+  --primary-color: #007bff;
+}
+
+body.dark-mode {
   --bg-color: #18191a;
   --text-color: #e4e6eb;
   --primary-color: #007bff;
@@ -30,12 +36,6 @@ body {
   color: var(--text-color);
   font-family: 'Segoe UI', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-body.light-mode {
-  --bg-color: #EAEDF0;
-  --text-color: #212529;
-  --primary-color: #007bff;
 }
 
 /* Layout & Components */
@@ -111,3 +111,30 @@ body.light-mode {
     align-items: flex-start;
   }
 }
+
+/* Fonts */
+
+body {
+  font-family: 'Open Sans', 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Merriweather', serif;
+}
+
+.tech-list li {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.tech-list li::before {
+  content: "▹";
+  color: var(--primary-color); 
+  margin-right: 6px;
+}
+
+body.light-mode .tech-list li::before {
+  color: #ffffff; 
+}
+
