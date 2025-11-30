@@ -2,12 +2,20 @@
   --bg-color: #EAEDF0;
   --text-color: #212529;
   --primary-color: #007bff;
+  --card-bg: #fff;           
+  --tag-bg: #e0e0e0;        
+  --tag-text: #212529;    
+  --content-bg: #F8F9FA;  
 }
 
 body.dark-mode {
   --bg-color: #18191a;
   --text-color: #e4e6eb;
   --primary-color: #007bff;
+  --card-bg: #242526;       
+  --tag-bg: #1c1c1c;         
+  --tag-text: #e4e6eb;       
+  --content-bg: #212529;
 }
 
 #home {
@@ -134,7 +142,76 @@ h1, h2, h3, h4, h5 {
   margin-right: 6px;
 }
 
-body.light-mode .tech-list li::before {
+body.dark-mode .tech-list li::before {
   color: #ffffff; 
+}
+
+/*Projects Section*/
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  height: 100%;
+}
+
+/* Hover effect */
+.project-card:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); 
+  z-index: 2; 
+}
+
+.project-content {
+  background-color: var(--content-bg);
+  padding: 1.25rem;
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
+}
+
+.project-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.25rem; 
+  background-color: #F0F1F2; 
+  border-top: 1px solid #E3E4E5;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode .project-footer {
+  border-top-color: #1C1F23; 
+  background-color: #202428;
+}
+
+
+.tech-tag {
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-demo {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-demo:hover {
+  background-color: var(--primary-color);
+  color: #fff;
 }
 
