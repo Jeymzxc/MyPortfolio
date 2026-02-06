@@ -25,9 +25,81 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
-// ============================================================================
+
+// MOBILE TWO-TAP INTERACTION 
+document.addEventListener('DOMContentLoaded', () => {
+  // Only apply on mobile/touch devices
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+           || window.matchMedia('(max-width: 768px)').matches;
+  };
+
+  if (!isMobileDevice()) return;
+
+  // Get all project and certification links
+  const cardLinks = document.querySelectorAll('.project-link, .cert-link');
+
+  cardLinks.forEach((link) => {
+    let tapCount = 0;
+    let tapTimeout;
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      tapCount++;
+
+      // Clear previous timeout
+      clearTimeout(tapTimeout);
+
+      if (tapCount === 1) {
+        // First tap: Show preview effect
+        const card = link.closest('.project-card, .cert-card');
+        card?.classList.add('mobile-preview-active');
+
+        // Show visual feedback
+        const tapIndicator = document.createElement('div');
+        tapIndicator.className = 'mobile-tap-indicator';
+        tapIndicator.innerHTML = '<span>Tap again to view</span>';
+        card?.appendChild(tapIndicator);
+
+        // Auto-remove indicator after 2 seconds if no second tap
+        tapTimeout = setTimeout(() => {
+          tapCount = 0;
+          card?.classList.remove('mobile-preview-active');
+          tapIndicator.remove();
+        }, 2000);
+      } else if (tapCount === 2) {
+        // Second tap: Open modal
+        tapCount = 0;
+        const card = link.closest('.project-card, .cert-card');
+        card?.classList.remove('mobile-preview-active');
+        
+        // Remove tap indicator
+        const indicator = card?.querySelector('.mobile-tap-indicator');
+        indicator?.remove();
+
+        // Trigger modal
+        const modalTrigger = link.getAttribute('data-bs-target');
+        const modal = document.querySelector(modalTrigger);
+        if (modal) {
+          const bsModal = new bootstrap.Modal(modal);
+          bsModal.show();
+        }
+      }
+    });
+
+    // Reset tap count on other interactions
+    link.addEventListener('blur', () => {
+      tapCount = 0;
+      clearTimeout(tapTimeout);
+      const card = link.closest('.project-card, .cert-card');
+      card?.classList.remove('mobile-preview-active');
+      card?.querySelector('.mobile-tap-indicator')?.remove();
+    });
+  });
+});
+
+
 // PROJECT IMAGE VIEWER MODAL
-// ============================================================================
 // This handles the project image gallery modal with next/previous navigation
 
 /**
@@ -188,15 +260,19 @@ class ProjectImageViewer {
 
     const currentImageData = this.images[this.currentImageIndex];
 
-    // Set image source with fade animation
+    // Immediately hide the image to prevent flash of old image
+    this.imageElement.style.opacity = '0';
     this.imageElement.classList.remove('project-modal-fade-in');
     
     // Trigger reflow to restart animation
     void this.imageElement.offsetWidth;
     
-    // Set the image source and alt text
+    // Set the image source and alt text while image is hidden
     this.imageElement.src = currentImageData.src;
     this.imageElement.alt = currentImageData.label;
+    
+    // Reset opacity and trigger fade-in animation
+    this.imageElement.style.opacity = '';
     this.imageElement.classList.add('project-modal-fade-in');
 
     // Update the image label overlay

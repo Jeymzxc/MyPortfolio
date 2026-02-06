@@ -14,6 +14,59 @@
   }
 }
 
+/* Mobile Two-Tap Interaction */
+@keyframes tapPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+@keyframes tapFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile preview active state */
+.mobile-preview-active {
+  animation: tapPulse 0.6s ease-out;
+}
+
+/* Tap indicator message */
+.mobile-tap-indicator {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  animation: tapFadeIn 0.3s ease-out;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.mobile-tap-indicator span {
+  background-color: #007bff;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
 .project-modal-fade-in {
   animation: projectModalFadeIn 0.4s ease-in-out;
 }
