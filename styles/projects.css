@@ -141,12 +141,14 @@ body.dark-mode .project-footer {
   display: block;
 }
 
-.project-link:hover .project-img-container img {
+.project-link:hover .project-img-container img,
+.project-link.mobile-preview-active .project-img-container img {
   filter: blur(4px) brightness(0.7);
   transform: scale(1.1);
 }
 
-.project-link:hover .project-overlay {
+.project-link:hover .project-overlay,
+.project-link.mobile-preview-active .project-overlay {
   opacity: 1;
 }
 

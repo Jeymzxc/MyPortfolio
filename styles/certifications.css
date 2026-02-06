@@ -115,12 +115,14 @@
   letter-spacing: 1px;
 }
 
-.cert-link:hover .cert-img-container img {
+.cert-link:hover .cert-img-container img,
+.cert-link.mobile-preview-active .cert-img-container img {
   filter: blur(4px) brightness(0.8);
   transform: scale(1.1); 
 }
 
-.cert-link:hover .cert-overlay {
+.cert-link:hover .cert-overlay,
+.cert-link.mobile-preview-active .cert-overlay {
   opacity: 1;
 }
 

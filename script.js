@@ -28,13 +28,14 @@ toggleBtn.addEventListener('click', () => {
 
 // MOBILE TWO-TAP INTERACTION 
 document.addEventListener('DOMContentLoaded', () => {
-  // Only apply on mobile/touch devices
-  const isMobileDevice = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-           || window.matchMedia('(max-width: 768px)').matches;
+  // Only apply on actual touch devices
+  const isTouchDevice = () => {
+    return (('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
   };
 
-  if (!isMobileDevice()) return;
+  if (!isTouchDevice()) return;
 
   // Get all project and certification links
   const cardLinks = document.querySelectorAll('.project-link, .cert-link');
@@ -42,58 +43,65 @@ document.addEventListener('DOMContentLoaded', () => {
   cardLinks.forEach((link) => {
     let tapCount = 0;
     let tapTimeout;
+    let touchStartTime = 0;
 
-    link.addEventListener('click', (e) => {
+    link.addEventListener('touchstart', (e) => {
+      touchStartTime = Date.now();
+    });
+
+    link.addEventListener('touchend', (e) => {
       e.preventDefault();
-      tapCount++;
+      
+      // Ignore long presses (> 500ms)
+      const touchDuration = Date.now() - touchStartTime;
+      if (touchDuration > 500) {
+        return;
+      }
 
-      // Clear previous timeout
+      tapCount++;
       clearTimeout(tapTimeout);
 
       if (tapCount === 1) {
-        // First tap: Show preview effect
-        const card = link.closest('.project-card, .cert-card');
-        card?.classList.add('mobile-preview-active');
+        // First tap: Show the built-in overlay (eye icon + text)
+        link.classList.add('mobile-preview-active');
 
-        // Show visual feedback
-        const tapIndicator = document.createElement('div');
-        tapIndicator.className = 'mobile-tap-indicator';
-        tapIndicator.innerHTML = '<span>Tap again to view</span>';
-        card?.appendChild(tapIndicator);
-
-        // Auto-remove indicator after 2 seconds if no second tap
+        // Auto-remove after 2 seconds if no second tap
         tapTimeout = setTimeout(() => {
           tapCount = 0;
-          card?.classList.remove('mobile-preview-active');
-          tapIndicator.remove();
+          link.classList.remove('mobile-preview-active');
         }, 2000);
       } else if (tapCount === 2) {
         // Second tap: Open modal
+        clearTimeout(tapTimeout);
         tapCount = 0;
-        const card = link.closest('.project-card, .cert-card');
-        card?.classList.remove('mobile-preview-active');
-        
-        // Remove tap indicator
-        const indicator = card?.querySelector('.mobile-tap-indicator');
-        indicator?.remove();
+        link.classList.remove('mobile-preview-active');
 
         // Trigger modal
         const modalTrigger = link.getAttribute('data-bs-target');
-        const modal = document.querySelector(modalTrigger);
-        if (modal) {
-          const bsModal = new bootstrap.Modal(modal);
-          bsModal.show();
+        if (modalTrigger) {
+          const modal = document.querySelector(modalTrigger);
+          if (modal) {
+            // For cert modal, manually set the image since we're preventing default
+            if (modalTrigger === '#certModal') {
+              const imageSrc = link.getAttribute('data-cert-src');
+              const modalImage = modal.querySelector('#modalImage');
+              if (modalImage) {
+                modalImage.src = imageSrc;
+              }
+            }
+            // For project modal, load the project using ProjectImageViewer
+            else if (modalTrigger === '#projectImageModal') {
+              const projectName = link.getAttribute('data-project');
+              if (projectName && projectViewer) {
+                projectViewer.loadProject(projectName);
+              }
+            }
+            
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.show();
+          }
         }
       }
-    });
-
-    // Reset tap count on other interactions
-    link.addEventListener('blur', () => {
-      tapCount = 0;
-      clearTimeout(tapTimeout);
-      const card = link.closest('.project-card, .cert-card');
-      card?.classList.remove('mobile-preview-active');
-      card?.querySelector('.mobile-tap-indicator')?.remove();
     });
   });
 });
@@ -333,6 +341,7 @@ class ProjectImageViewer {
 }
 
 // Initialize the project image viewer when DOM is ready
+let projectViewer;
 document.addEventListener('DOMContentLoaded', () => {
-  new ProjectImageViewer();
+  projectViewer = new ProjectImageViewer();
 });
