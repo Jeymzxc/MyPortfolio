@@ -183,7 +183,15 @@
         <!-- Project Card -->
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm project-card">
-            <img src="images/projects/iLocated.png" class="card-img-top" alt="iLocate">
+            <a href="#" class="project-link" data-bs-toggle="modal" data-bs-target="#projectImageModal" data-project="iLocate">
+              <div class="project-img-container">
+                <img src="images/projects/iLocated.png" class="card-img-top" alt="iLocate">
+                <div class="project-overlay">
+                  <i class="fa-regular fa-eye"></i>
+                  <span>View Project</span>
+                </div>
+              </div>
+            </a>
             
             <div class="project-content">
               <!-- Tags First -->
@@ -202,7 +210,7 @@
 
             <!-- Footer -->
             <div class="project-footer">
-              <a href="#" class="btn btn-demo" onclick="return false;">Preview</a>
+              <a href="#" class="btn btn-demo" data-bs-toggle="modal" data-bs-target="#projectImageModal" data-project="iLocate">Preview</a>
             </div>
           </div>
         </div>
@@ -212,7 +220,16 @@
          <!-- Project Card -->
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm project-card">
-            <img src="images/projects/lost_and_found.png" class="card-img-top" alt="iLocate">
+            <a href="#" class="project-link" data-bs-toggle="modal" data-bs-target="#projectImageModal" data-project="lostandfound">
+              <div class="project-img-container">
+                <img src="images/projects/lost_and_found.png" class="card-img-top" alt="lost_and_found">
+                <div class="project-overlay">
+                  <i class="fa-regular fa-eye"></i>
+                  <span>View Project</span>
+                </div>
+              </div>
+            </a>
+            
             
             <div class="project-content">
               <!-- Tags First -->
@@ -228,7 +245,7 @@
 
             <!-- Footer -->
             <div class="project-footer">
-              <a href="#" class="btn btn-demo" onclick="return false;">Preview</a>
+              <a href="#" class="btn btn-demo" data-bs-toggle="modal" data-bs-target="#projectImageModal" data-project="lostandfound">Preview</a>
             </div>
           </div>
         </div>
@@ -237,7 +254,16 @@
          <!-- Project Card -->
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm project-card">
-            <img src="images/projects/sunrise.png" class="card-img-top" alt="iLocate">
+            <a href="#" class="project-link" data-bs-toggle="modal" data-bs-target="#projectImageModal" data-project="sunrise">
+              <div class="project-img-container">
+                <img src="images/projects/sunrise.png" class="card-img-top" alt="Sunrise">
+                <div class="project-overlay">
+                  <i class="fa-regular fa-eye"></i>
+                  <span>View Project</span>
+                </div>
+              </div>
+            </a>
+            
             
             <div class="project-content">
               <!-- Tags First -->
@@ -256,7 +282,7 @@
 
             <!-- Footer -->
             <div class="project-footer">
-              <a href="#" class="btn btn-demo" onclick="return false;">Preview</a>
+              <a href="#" class="btn btn-demo" data-bs-toggle="modal" data-bs-target="#projectImageModal" data-project="sunrise">Preview</a>
             </div>
           </div>
         </div>
@@ -403,7 +429,7 @@
   <section id="contact" class="py-5 text-center">
     <div class="container">
       <h2>Contact</h2>
-      <p>My inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!</p>
+      <p>My inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
 
       <!-- Social icons -->
       <div class="social-links d-flex justify-content-center gap-3">
@@ -490,7 +516,7 @@
 </script>
 
 
-  <!-- Modal for Preview -->
+  <!-- Modal for Certifications Preview -->
   <div class="modal fade" id="certModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content bg-transparent border-0">
@@ -499,6 +525,44 @@
         </div>
         <div class="modal-body p-0 text-center">
           <img src="" id="modalImage" class="img-fluid rounded shadow" alt="Certificate Preview">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Project Image Gallery -->
+  <div class="modal fade" id="projectImageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content bg-transparent border-0">
+        <div class="modal-header border-0 p-0 mb-2">
+          <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-0">
+          <!-- Image Container with Fade Animation - Supports Portrait & Landscape -->
+          <div class="project-modal-image-container position-relative">
+            <!-- Image Label Overlay -->
+            <div class="project-modal-label-overlay">
+              <span class="badge bg-primary bg-opacity-80" id="projectModalImageLabel">Image Label</span>
+            </div>
+
+            <!-- Image Element with Auto-fitting -->
+            <img src="" id="projectModalImage" class="project-modal-image project-modal-fade-in" alt="Project Image">
+            
+            <!-- Image Counter Badge -->
+            <div class="project-modal-counter position-absolute bottom-0 start-50 translate-middle-x mb-3">
+              <small class="badge bg-dark bg-opacity-75" id="imageCounter">1 / 1</small>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="d-flex justify-content-between align-items-center mt-4 gap-2">
+            <button type="button" class="btn btn-sm btn-outline-light" id="projectPrevBtn" aria-label="Previous image">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-light" id="projectNextBtn" aria-label="Next image">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>

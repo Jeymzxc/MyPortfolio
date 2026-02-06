@@ -25,19 +25,59 @@
   border-radius: 12px;
 }
 
+/* Image Container - Handles Both Portrait & Landscape */
 .project-modal-image-container {
   background-color: var(--card-bg);
-  padding: 0.5rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  
+  /* Responsive dimensions for different orientations */
+  max-width: 100%;
+  max-height: 70vh;
+  overflow: hidden;
 }
 
-#projectModalImage {
+/* Image Styling - Maintains Aspect Ratio */
+.project-modal-image {
+  max-width: 100%;
+  max-height: 65vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease;
+}
+
+/* Image Label Overlay */
+.project-modal-label-overlay {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.project-modal-label-overlay .badge {
+  font-size: 0.85rem;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#projectModalImageLabel {
+  color: #ffffff;
+  min-width: 150px;
+  text-align: center;
 }
 
 /* Image Counter Badge */
@@ -73,17 +113,29 @@
 }
 
 /* Responsive */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   #projectImageModal .modal-dialog {
-    margin: 1rem;
+    margin: 1rem 0.5rem;
   }
 
   .project-modal-image-container {
-    min-height: 300px;
+    max-height: 60vh;
+    padding: 1rem;
   }
 
-  #projectModalImage {
-    max-height: 400px;
+  .project-modal-image {
+    max-height: 55vh;
+  }
+
+  .project-modal-label-overlay {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .project-modal-label-overlay .badge {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
   }
 
   #projectPrevBtn,
@@ -95,5 +147,53 @@
   #projectPrevBtn i,
   #projectNextBtn i {
     display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  #projectImageModal .modal-dialog {
+    margin: 0.5rem;
+  }
+
+  #projectImageModal .modal-content {
+    padding: 1rem;
+  }
+
+  .project-modal-image-container {
+    max-height: 50vh;
+    padding: 0.875rem;
+    margin: 0;
+  }
+
+  .project-modal-image {
+    max-height: 45vh;
+    border-radius: 6px;
+  }
+
+  .project-modal-label-overlay {
+    top: 0.75rem;
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .project-modal-label-overlay .badge {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  #projectModalImageLabel {
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  .project-modal-counter {
+    bottom: 0.75rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  #projectPrevBtn,
+  #projectNextBtn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
   }
 }
