@@ -1,0 +1,125 @@
+/* ============================================================================
+   NAVBAR STYLES - Navigation bar, theme toggle
+   ============================================================================ */
+
+.navbar {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: var(--bg-color);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); 
+  transition: padding 0.3s ease, top 0.3s ease-in-out;
+  position: fixed; 
+  width: 100%;
+  z-index: 999;
+}
+
+.navbar-brand {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.25rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-nav {
+  gap: 0.75rem;
+}
+
+.nav-link {
+  color: var(--text-color) !important;
+  margin-right: 1rem;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* Social Icons & Theme Toggle */
+.social-link i,
+#themeToggle i {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.social-link i:hover,
+#themeToggle i:hover {
+  color: var(--primary-color);
+}
+
+.social-link {
+  text-decoration: none;
+  margin-right: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.social-link:hover {
+  transform: scale(1.1);
+}
+
+/* Theme Toggle Button */
+#themeToggle {
+  border: none;
+  background: transparent;
+}
+
+/* Navbar States */
+.navbar-hidden {
+  top: -100px;
+}
+
+.navbar-shown {
+  top: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem !important;
+  }
+
+  .nav-link {
+    margin-right: 0 !important;
+    padding: 0.5rem 0;
+    font-size: 0.95rem;
+  }
+
+  #themeToggle {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-primary {
+    padding: 5px 14px;
+    font-size: 0.9rem;
+  }
+
+  .social-link i,
+  #themeToggle i {
+    font-size: 1.1rem;
+  }
+
+  .social-link {
+    margin-right: 0.75rem;
+  }
+}

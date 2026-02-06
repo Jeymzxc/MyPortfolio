@@ -1,0 +1,45 @@
+/* ============================================================================
+   FOOTER SECTION STYLES
+   ============================================================================ */
+
+footer {
+  padding: 2rem 0 !important;
+}
+
+footer p {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+footer .social-link i {
+  color: #fff;
+  font-size: 1.25rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+footer .social-link:hover {
+  transform: scale(1.1);
+  color: var(--primary-color);
+}
+
+footer .social-link {
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  footer {
+    padding: 1.5rem 0 !important;
+  }
+
+  footer p {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  footer .social-link i {
+    font-size: 1.1rem;
+  }
+}

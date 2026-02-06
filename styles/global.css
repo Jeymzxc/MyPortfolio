@@ -1,0 +1,80 @@
+/* ============================================================================
+   GLOBAL STYLES - Variables, Base Body Styles, Typography
+   ============================================================================ */
+
+:root {
+  --bg-color: #EAEDF0;
+  --text-color: #212529;
+  --primary-color: #007bff;
+  --card-bg: #fff;           
+  --tag-bg: #e0e0e0;        
+  --tag-text: #212529;    
+  --content-bg: #F8F9FA;  
+}
+
+body.dark-mode {
+  --bg-color: #18191a;
+  --text-color: #e4e6eb;
+  --primary-color: #007bff;
+  --card-bg: #242526;       
+  --tag-bg: #1c1c1c;         
+  --tag-text: #e4e6eb;       
+  --content-bg: #212529;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: 'Open Sans', 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Merriweather', serif;
+}
+
+.lead {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Utility Classes */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .min-vh-100 {
+    min-height: auto;
+    padding: 3rem 0;
+  }
+}
+
+/* Tech List Helper */
+.tech-list li {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.tech-list li::before {
+  content: "▹";
+  color: var(--primary-color); 
+  margin-right: 6px;
+}
+
+body.dark-mode .tech-list li::before {
+  color: #ffffff; 
+}
+
+/* Layout & Components Base Transitions */
+.navbar,
+.card,
+.btn,
+.nav-link {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
