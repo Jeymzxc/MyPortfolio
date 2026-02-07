@@ -37,51 +37,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!isTouchDevice()) return;
 
-  // Get all project and certification links
-  const cardLinks = document.querySelectorAll('.project-link, .cert-link');
+  let activeCard = null;
+  
+  let touchStartX = 0;
+  let touchStartY = 0;
+  const SCROLL_THRESHOLD = 10; 
+
+  // Get all interactive cards (projects, certifications, and skills)
+  const cardLinks = document.querySelectorAll('.project-link, .cert-link, .skill-card');
 
   cardLinks.forEach((link) => {
-    let tapCount = 0;
-    let tapTimeout;
-    let touchStartTime = 0;
-
     link.addEventListener('touchstart', (e) => {
-      touchStartTime = Date.now();
+      // Record the initial touch position
+      const touch = e.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    });
+
+    link.addEventListener('touchmove', (e) => {
+      // Calculate the distance moved since touchstart
+      const touch = e.touches[0];
+      const deltaX = Math.abs(touch.clientX - touchStartX);
+      const deltaY = Math.abs(touch.clientY - touchStartY);
+      const totalDelta = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      // If user has scrolled more than threshold, mark this card as "scrolling"
+      if (totalDelta > SCROLL_THRESHOLD) {
+        link.dataset.isScrolling = 'true';
+      }
     });
 
     link.addEventListener('touchend', (e) => {
-      e.preventDefault();
-      
-      // Ignore long presses (> 500ms)
-      const touchDuration = Date.now() - touchStartTime;
-      if (touchDuration > 500) {
+      // If this touch involved scrolling, ignore it
+      if (link.dataset.isScrolling === 'true') {
+        link.dataset.isScrolling = 'false';
         return;
       }
 
-      tapCount++;
-      clearTimeout(tapTimeout);
+      e.preventDefault();
 
-      if (tapCount === 1) {
-        // First tap: Show the built-in overlay (eye icon + text)
-        link.classList.add('mobile-preview-active');
-
-        // Auto-remove after 2 seconds if no second tap
-        tapTimeout = setTimeout(() => {
-          tapCount = 0;
-          link.classList.remove('mobile-preview-active');
-        }, 2000);
-      } else if (tapCount === 2) {
-        // Second tap: Open modal
-        clearTimeout(tapTimeout);
-        tapCount = 0;
-        link.classList.remove('mobile-preview-active');
-
+      // If tapping the same card again, open the modal (double tap behavior preserved)
+      if (activeCard === link) {
         // Trigger modal
         const modalTrigger = link.getAttribute('data-bs-target');
         if (modalTrigger) {
           const modal = document.querySelector(modalTrigger);
           if (modal) {
-            // For cert modal, manually set the image since we're preventing default
+            // For cert modal, manually set the image
             if (modalTrigger === '#certModal') {
               const imageSrc = link.getAttribute('data-cert-src');
               const modalImage = modal.querySelector('#modalImage');
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalImage.src = imageSrc;
               }
             }
-            // For project modal, load the project using ProjectImageViewer
+            // For project modal, load the project
             else if (modalTrigger === '#projectImageModal') {
               const projectName = link.getAttribute('data-project');
               if (projectName && projectViewer) {
@@ -101,8 +103,30 @@ document.addEventListener('DOMContentLoaded', () => {
             bsModal.show();
           }
         }
+        
+        activeCard = null;
+        link.classList.remove('mobile-card-active');
+        return;
       }
+
+      if (activeCard) {
+        activeCard.classList.remove('mobile-card-active');
+      }
+
+      activeCard = link;
+      link.classList.add('mobile-card-active');
     });
+  });
+
+  // Clear active card when touching outside
+  document.addEventListener('touchend', (e) => {
+    // If touch target is not a card, clear active state
+    if (!e.target.closest('.project-link, .cert-link, .skill-card')) {
+      if (activeCard) {
+        activeCard.classList.remove('mobile-card-active');
+        activeCard = null;
+      }
+    }
   });
 });
 
@@ -199,6 +223,13 @@ const projectImages = {
     { src: 'images/projects/sunrise/admin_6.png', label: 'Admin Dashboard' },
     { src: 'images/projects/sunrise/admin_7.png', label: 'Admin Dashboard' },
     
+  ],
+  sumoBot: [
+    { src: 'images/projects/sumoBot/demo-1.mp4', label: 'Video Demo', type: 'video' },
+    { src: 'images/projects/sumoBot/sumoBot-2.jpg', label: 'RC Car', type: 'image' },
+    { src: 'images/projects/sumoBot/sumoBot-3.jpg', label: 'RC Car', type: 'image' },
+    { src: 'images/projects/sumoBot/BT-Controller.jpg', label: 'Bluetooth RC Controller', type: 'image' },
+
   ]
 };
 
@@ -264,34 +295,71 @@ class ProjectImageViewer {
 
   // Display the current image and update UI
   displayImage() {
-    if (this.images.length === 0) return;
+  if (this.images.length === 0) return;
 
-    const currentImageData = this.images[this.currentImageIndex];
+  const currentImageData = this.images[this.currentImageIndex];
 
-    // Immediately hide the image to prevent flash of old image
+  // Get or create video element
+  let videoElement = this.modal.querySelector('.project-modal-video');
+  
+
+  if (currentImageData.type === 'video') {
+    this.imageElement.style.display = 'none';
+
+    if (!videoElement) {
+      videoElement = document.createElement('video');
+      videoElement.className = 'project-modal-video';
+      videoElement.style.width = '100%';
+      videoElement.style.maxHeight = '600px';
+      videoElement.controls = true;
+      this.imageElement.parentNode.insertBefore(videoElement, this.imageElement);
+    }
+    
+    videoElement.src = currentImageData.src;
+    videoElement.style.display = 'block';
+    videoElement.style.opacity = '0';
+    videoElement.classList.remove('project-modal-fade-in');
+    
+    void videoElement.offsetWidth;
+    
+    videoElement.style.opacity = '';
+    videoElement.classList.add('project-modal-fade-in');
+    
+  } else {
+    if (videoElement) {
+      videoElement.pause(); 
+      videoElement.src = ''; 
+      videoElement.style.display = 'none';
+    }
+    
+    // Show image
+    this.imageElement.style.display = 'block';
     this.imageElement.style.opacity = '0';
     this.imageElement.classList.remove('project-modal-fade-in');
     
-    // Trigger reflow to restart animation
-    void this.imageElement.offsetWidth;
-    
-    // Set the image source and alt text while image is hidden
-    this.imageElement.src = currentImageData.src;
-    this.imageElement.alt = currentImageData.label;
-    
-    // Reset opacity and trigger fade-in animation
-    this.imageElement.style.opacity = '';
-    this.imageElement.classList.add('project-modal-fade-in');
-
-    // Update the image label overlay
-    this.updateImageLabel(currentImageData.label);
-
-    // Update counter
-    this.updateCounter();
-    
-    // Update button states
-    this.updateButtonStates();
+    // Preload image
+    const img = new Image();
+    img.onload = () => {
+      void this.imageElement.offsetWidth;
+      
+      this.imageElement.src = currentImageData.src;
+      this.imageElement.alt = currentImageData.label;
+      this.imageElement.style.opacity = '';
+      this.imageElement.classList.add('project-modal-fade-in');
+      
+      this.updateImageLabel(currentImageData.label);
+      this.updateCounter();
+      this.updateButtonStates();
+    };
+    img.src = currentImageData.src;
+    return;
   }
+
+  this.updateImageLabel(currentImageData.label);
+  this.updateCounter();
+  this.updateButtonStates();
+}
+
   // Update the image label overlay
   updateImageLabel(label) {
     const labelElement = document.getElementById('projectModalImageLabel');
