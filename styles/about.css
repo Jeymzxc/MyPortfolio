@@ -1,6 +1,4 @@
-/* ============================================================================
-   ABOUT SECTION STYLES
-   ============================================================================ */
+/* --------------- ABOUT SECTION STYLES --------------- */
 
 #about {
   padding: 4rem 0;
@@ -48,11 +46,18 @@
 
 @media (max-width: 576px) {
   #about {
-    padding: 1.5rem 0;
+    padding: 1.5rem;
+    text-align: justify;
   }
 
   #about h2 {
     font-size: 1.5rem;
+  }
+
+  #about .col-md-7 {
+    padding-left: 1rem;   
+    padding-right: 1rem;
+    text-align: justify;  
   }
 
   #about .lead {

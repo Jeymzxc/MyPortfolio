@@ -1,6 +1,4 @@
-/* ============================================================================
-   HOME SECTION STYLES
-   ============================================================================ */
+/* --------------- HOME SECTION STYLES --------------- */
 
 #home {
   padding-bottom: 80px;
@@ -50,6 +48,14 @@ h1 {
 @media (max-width: 576px) {
   #home {
     padding-top: 80px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #home .col-md-6 {
+    padding-left: 1rem;   
+    padding-right: 1rem;  
+    text-align: justify;
   }
 
   h1 {

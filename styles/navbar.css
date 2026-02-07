@@ -1,6 +1,4 @@
-/* ============================================================================
-   NAVBAR STYLES - Navigation bar, theme toggle
-   ============================================================================ */
+/* --------------- NAVBAR STYLES - Navigation bar, theme toggle --------------- */
 
 .navbar {
   padding-top: 1rem;
@@ -122,4 +120,28 @@
   .social-link {
     margin-right: 0.75rem;
   }
+}
+
+/* Blue glow effect when navbar is visible */
+.navbar-shown {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 123, 255, 0.3);
+}
+
+/* Dark mode - brighter blue glow */
+body.dark-mode .navbar-shown {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 20px rgba(77, 163, 255, 0.4);
+}
+
+/* Light mode - subtle blue glow */
+body:not(.dark-mode) .navbar-shown {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 123, 255, 0.2);
+}
+
+/* Dark mode navbar toggler (hamburger menu & border) */
+body.dark-mode .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+body.dark-mode .navbar-toggler-icon {
+  filter: invert(1);
 }

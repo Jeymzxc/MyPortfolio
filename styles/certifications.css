@@ -1,6 +1,4 @@
-/* ============================================================================
-   CERTIFICATIONS SECTION STYLES
-   ============================================================================ */
+/* --------------- CERTIFICATIONS SECTION STYLES --------------- */
 
 #certifications {
   padding: 3rem 0;
@@ -12,16 +10,11 @@
 }
 
 #certifications .row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -0.75rem;
-  justify-content: flex-start;
+  margin: 0;
 }
 
 #certifications .row > .col-md-4 {
   display: flex;
-  flex: 0 0 calc(33.333% - 1.5rem);
-  padding: 0 0.75rem;
   margin-bottom: 1.5rem;
 }
 
@@ -55,6 +48,7 @@
   padding: 1.25rem;
   transition: background-color 0.3s ease;
   flex-grow: 1;
+  text-align: justify;
 }
 
 .cert-content h5 {
@@ -126,9 +120,6 @@
   opacity: 1;
 }
 
-#certifications .row:last-child {
-  justify-content: flex-start;
-}
 
 /* Responsive */
 @media (max-width: 992px) {
